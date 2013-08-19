@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		1DEB50D317C2010F000495AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEB50D217C2010F000495AC /* Foundation.framework */; };
 		1DEB50D617C2010F000495AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50D517C2010F000495AC /* main.m */; };
-		1DEB50DA17C2010F000495AC /* KFEpubConverter.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DEB50D917C2010F000495AC /* KFEpubConverter.1 */; };
-		1DEB50E217C20138000495AC /* KFEpubConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50E117C20138000495AC /* KFEpubConverter.m */; };
+		1DEB50E217C20138000495AC /* KFConverterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50E117C20138000495AC /* KFConverterController.m */; };
+		1DEB50E517C20487000495AC /* KFDataConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50E417C20487000495AC /* KFDataConnection.m */; };
+		1DEB50E717C20C7F000495AC /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEB50E617C20C7F000495AC /* AppKit.framework */; };
+		DE7D501B532D472A97762A9F /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B64D4BF5F2624DE380E39F51 /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -20,20 +22,23 @@
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
-				1DEB50DA17C2010F000495AC /* KFEpubConverter.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1DEB50CF17C2010F000495AC /* KFEpubConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KFEpubConverter; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DEB50CF17C2010F000495AC /* KFrtf2htmlConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KFrtf2htmlConverter; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DEB50D217C2010F000495AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DEB50D517C2010F000495AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1DEB50D817C2010F000495AC /* KFEpubConverter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KFEpubConverter-Prefix.pch"; sourceTree = "<group>"; };
-		1DEB50D917C2010F000495AC /* KFEpubConverter.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = KFEpubConverter.1; sourceTree = "<group>"; };
-		1DEB50E017C20138000495AC /* KFEpubConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KFEpubConverter.h; sourceTree = "<group>"; };
-		1DEB50E117C20138000495AC /* KFEpubConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KFEpubConverter.m; sourceTree = "<group>"; };
+		1DEB50D817C2010F000495AC /* KFrtf2htmlConverter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KFrtf2htmlConverter-Prefix.pch"; sourceTree = "<group>"; };
+		1DEB50E017C20138000495AC /* KFConverterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KFConverterController.h; sourceTree = "<group>"; };
+		1DEB50E117C20138000495AC /* KFConverterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KFConverterController.m; sourceTree = "<group>"; };
+		1DEB50E317C20487000495AC /* KFDataConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KFDataConnection.h; sourceTree = "<group>"; };
+		1DEB50E417C20487000495AC /* KFDataConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KFDataConnection.m; sourceTree = "<group>"; };
+		1DEB50E617C20C7F000495AC /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		7C726DD2995C41ECA004592E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
+		B64D4BF5F2624DE380E39F51 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +46,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DEB50E717C20C7F000495AC /* AppKit.framework in Frameworks */,
 				1DEB50D317C2010F000495AC /* Foundation.framework in Frameworks */,
+				DE7D501B532D472A97762A9F /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,13 +61,14 @@
 				1DEB50D417C2010F000495AC /* KFEpubConverter */,
 				1DEB50D117C2010F000495AC /* Frameworks */,
 				1DEB50D017C2010F000495AC /* Products */,
+				7C726DD2995C41ECA004592E /* Pods.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
 		1DEB50D017C2010F000495AC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1DEB50CF17C2010F000495AC /* KFEpubConverter */,
+				1DEB50CF17C2010F000495AC /* KFrtf2htmlConverter */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,7 +76,9 @@
 		1DEB50D117C2010F000495AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1DEB50E617C20C7F000495AC /* AppKit.framework */,
 				1DEB50D217C2010F000495AC /* Foundation.framework */,
+				B64D4BF5F2624DE380E39F51 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -77,18 +87,20 @@
 			isa = PBXGroup;
 			children = (
 				1DEB50D517C2010F000495AC /* main.m */,
-				1DEB50E017C20138000495AC /* KFEpubConverter.h */,
-				1DEB50E117C20138000495AC /* KFEpubConverter.m */,
-				1DEB50D917C2010F000495AC /* KFEpubConverter.1 */,
+				1DEB50E017C20138000495AC /* KFConverterController.h */,
+				1DEB50E117C20138000495AC /* KFConverterController.m */,
+				1DEB50E317C20487000495AC /* KFDataConnection.h */,
+				1DEB50E417C20487000495AC /* KFDataConnection.m */,
 				1DEB50D717C2010F000495AC /* Supporting Files */,
 			);
-			path = KFEpubConverter;
+			name = KFEpubConverter;
+			path = KFrtf2htmlConverter;
 			sourceTree = "<group>";
 		};
 		1DEB50D717C2010F000495AC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				1DEB50D817C2010F000495AC /* KFEpubConverter-Prefix.pch */,
+				1DEB50D817C2010F000495AC /* KFrtf2htmlConverter-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -96,21 +108,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1DEB50CE17C2010F000495AC /* KFEpubConverter */ = {
+		1DEB50CE17C2010F000495AC /* KFrtf2htmlConverter */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB50DD17C2010F000495AC /* Build configuration list for PBXNativeTarget "KFEpubConverter" */;
+			buildConfigurationList = 1DEB50DD17C2010F000495AC /* Build configuration list for PBXNativeTarget "KFrtf2htmlConverter" */;
 			buildPhases = (
+				A606BA3A55604EB785B53735 /* Check Pods Manifest.lock */,
 				1DEB50CB17C2010F000495AC /* Sources */,
 				1DEB50CC17C2010F000495AC /* Frameworks */,
 				1DEB50CD17C2010F000495AC /* CopyFiles */,
+				E19AFCDD317C46299BA03BB8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = KFEpubConverter;
+			name = KFrtf2htmlConverter;
 			productName = KFEpubConverter;
-			productReference = 1DEB50CF17C2010F000495AC /* KFEpubConverter */;
+			productReference = 1DEB50CF17C2010F000495AC /* KFrtf2htmlConverter */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -122,7 +136,7 @@
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "KF Interactive";
 			};
-			buildConfigurationList = 1DEB50CA17C2010F000495AC /* Build configuration list for PBXProject "KFEpubConverter" */;
+			buildConfigurationList = 1DEB50CA17C2010F000495AC /* Build configuration list for PBXProject "KFrtf2htmlConverter" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -134,10 +148,43 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1DEB50CE17C2010F000495AC /* KFEpubConverter */,
+				1DEB50CE17C2010F000495AC /* KFrtf2htmlConverter */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A606BA3A55604EB785B53735 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E19AFCDD317C46299BA03BB8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1DEB50CB17C2010F000495AC /* Sources */ = {
@@ -145,7 +192,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DEB50D617C2010F000495AC /* main.m in Sources */,
-				1DEB50E217C20138000495AC /* KFEpubConverter.m in Sources */,
+				1DEB50E217C20138000495AC /* KFConverterController.m in Sources */,
+				1DEB50E517C20487000495AC /* KFDataConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,26 +261,28 @@
 		};
 		1DEB50DE17C2010F000495AC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C726DD2995C41ECA004592E /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KFEpubConverter/KFEpubConverter-Prefix.pch";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "KFrtf2htmlConverter/KFrtf2htmlConverter-Prefix.pch";
+				PRODUCT_NAME = KFrtf2htmlConverter;
 			};
 			name = Debug;
 		};
 		1DEB50DF17C2010F000495AC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7C726DD2995C41ECA004592E /* Pods.xcconfig */;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "KFEpubConverter/KFEpubConverter-Prefix.pch";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "KFrtf2htmlConverter/KFrtf2htmlConverter-Prefix.pch";
+				PRODUCT_NAME = KFrtf2htmlConverter;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB50CA17C2010F000495AC /* Build configuration list for PBXProject "KFEpubConverter" */ = {
+		1DEB50CA17C2010F000495AC /* Build configuration list for PBXProject "KFrtf2htmlConverter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB50DB17C2010F000495AC /* Debug */,
@@ -241,13 +291,14 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		1DEB50DD17C2010F000495AC /* Build configuration list for PBXNativeTarget "KFEpubConverter" */ = {
+		1DEB50DD17C2010F000495AC /* Build configuration list for PBXNativeTarget "KFrtf2htmlConverter" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB50DE17C2010F000495AC /* Debug */,
 				1DEB50DF17C2010F000495AC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
