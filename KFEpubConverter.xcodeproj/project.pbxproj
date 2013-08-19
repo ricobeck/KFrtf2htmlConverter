@@ -10,6 +10,7 @@
 		1DEB50D317C2010F000495AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEB50D217C2010F000495AC /* Foundation.framework */; };
 		1DEB50D617C2010F000495AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50D517C2010F000495AC /* main.m */; };
 		1DEB50DA17C2010F000495AC /* KFEpubConverter.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1DEB50D917C2010F000495AC /* KFEpubConverter.1 */; };
+		1DEB50E217C20138000495AC /* KFEpubConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50E117C20138000495AC /* KFEpubConverter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,8 @@
 		1DEB50D517C2010F000495AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1DEB50D817C2010F000495AC /* KFEpubConverter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KFEpubConverter-Prefix.pch"; sourceTree = "<group>"; };
 		1DEB50D917C2010F000495AC /* KFEpubConverter.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = KFEpubConverter.1; sourceTree = "<group>"; };
+		1DEB50E017C20138000495AC /* KFEpubConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KFEpubConverter.h; sourceTree = "<group>"; };
+		1DEB50E117C20138000495AC /* KFEpubConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KFEpubConverter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				1DEB50D517C2010F000495AC /* main.m */,
+				1DEB50E017C20138000495AC /* KFEpubConverter.h */,
+				1DEB50E117C20138000495AC /* KFEpubConverter.m */,
 				1DEB50D917C2010F000495AC /* KFEpubConverter.1 */,
 				1DEB50D717C2010F000495AC /* Supporting Files */,
 			);
@@ -140,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1DEB50D617C2010F000495AC /* main.m in Sources */,
+				1DEB50E217C20138000495AC /* KFEpubConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

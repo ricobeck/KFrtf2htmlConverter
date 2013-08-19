@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KFEpubConverter.h"
 
 int main(int argc, const char * argv[])
 {
@@ -16,6 +17,8 @@ int main(int argc, const char * argv[])
         // insert code here...
         NSLog(@"Hello, World!");
         
+        KFEpubConverter *converter = [[KFEpubConverter alloc] init];
+        NSString *html = [converter convert];
     }
     return 0;
 }
