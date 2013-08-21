@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D41105617C511830040DFC5 /* KFPingResponseData.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D41105517C511830040DFC5 /* KFPingResponseData.m */; };
 		1DEB50D317C2010F000495AC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DEB50D217C2010F000495AC /* Foundation.framework */; };
 		1DEB50D617C2010F000495AC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50D517C2010F000495AC /* main.m */; };
 		1DEB50E217C20138000495AC /* KFConverterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1DEB50E117C20138000495AC /* KFConverterController.m */; };
@@ -28,6 +29,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1D41105417C511830040DFC5 /* KFPingResponseData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KFPingResponseData.h; sourceTree = "<group>"; };
+		1D41105517C511830040DFC5 /* KFPingResponseData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KFPingResponseData.m; sourceTree = "<group>"; };
 		1DEB50CF17C2010F000495AC /* KFrtf2htmlConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = KFrtf2htmlConverter; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DEB50D217C2010F000495AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1DEB50D517C2010F000495AC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -91,6 +94,8 @@
 				1DEB50E117C20138000495AC /* KFConverterController.m */,
 				1DEB50E317C20487000495AC /* KFDataConnection.h */,
 				1DEB50E417C20487000495AC /* KFDataConnection.m */,
+				1D41105417C511830040DFC5 /* KFPingResponseData.h */,
+				1D41105517C511830040DFC5 /* KFPingResponseData.m */,
 				1DEB50D717C2010F000495AC /* Supporting Files */,
 			);
 			name = KFEpubConverter;
@@ -194,6 +199,7 @@
 				1DEB50D617C2010F000495AC /* main.m in Sources */,
 				1DEB50E217C20138000495AC /* KFConverterController.m in Sources */,
 				1DEB50E517C20487000495AC /* KFDataConnection.m in Sources */,
+				1D41105617C511830040DFC5 /* KFPingResponseData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
