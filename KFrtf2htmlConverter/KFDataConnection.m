@@ -112,6 +112,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
             if (postData)
             {
                 NSLog(@"POST data found.");
+                NSDate *startDate = [NSDate date];
                
                 NSDictionary *requestData = [NSJSONSerialization JSONObjectWithData:[plainData dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
                 
@@ -163,8 +164,10 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
                 }
                 else
                 {
-                    NSLog(@"Conversion succeeded.");
+                    NSDate *endTime = [NSDate date];
+                    NSLog(@"Conversion succeeded in %.2fs.", [endTime timeIntervalSinceDate:startDate]);
                 }
+                NSLog(@"/n");
                 
                 NSData *response = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
                 return [[HTTPDataResponse alloc] initWithData:response];
