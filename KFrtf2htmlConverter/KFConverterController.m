@@ -10,8 +10,12 @@
 #import "KFDataConnection.h"
 
 #import <CocoaHTTPServer/HTTPServer.h>
+
 #import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
+#import <CocoaLumberjack/DDFileLogger.h>
+#import <CocoaLumberjack/DDASLLogger.h>
+#import <KFLogFormatter/KFLogFormatter.h>
 
 
 @interface KFConverterController ()
@@ -21,6 +25,7 @@
 
 @property (nonatomic, strong) HTTPServer *httpServer;
 
+@property (nonatomic, strong) DDFileLogger *fileLogger;
 
 @end
 
@@ -33,7 +38,7 @@
     self = [super init];
     if (self)
     {
-        [DDLog addLogger:[DDTTYLogger sharedInstance]];
+        [self initLogging];
     }
     return self;
 }
@@ -51,6 +56,18 @@
     
     NSError *error = nil;
     [self.httpServer start:&error];
+}
+
+
+- (void)initLogging
+{
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [[DDTTYLogger sharedInstance] setLogFormatter:[KFLogFormatter new]];
+    
+    self.fileLogger = [[DDFileLogger alloc] init];
+    self.fileLogger.rollingFrequency = 60 * 60 * 24;
+    self.fileLogger.logFileManager.maximumNumberOfLogFiles = 7;
+    [DDLog addLogger:self.fileLogger];
 }
 
 
