@@ -15,27 +15,61 @@
 
 static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 
+#define kSupportedMethodName @"POST"
+
+#define kCommandPing @"/ping"
+#define kCommandConvert @"/rtf2html"
+
+
+@interface KFDataConnection ()
+
+
+@property (nonatomic, strong) NSArray *supportedCommands;
+
+
+@end
+
+
 
 @implementation KFDataConnection
 
 
+- (id)initWithAsyncSocket:(GCDAsyncSocket *)newSocket configuration:(HTTPConfig *)aConfig
+{
+    self = [super initWithAsyncSocket:newSocket configuration:aConfig];
+    if (self != nil)
+    {
+        _supportedCommands = @[kCommandPing, kCommandConvert];
+    }
+    return self;
+}
+
+
+
 - (BOOL)supportsMethod:(NSString *)method atPath:(NSString *)path
 {
-    return YES;
-    
-    if ([method isEqualToString:@"POST"] && [path isEqualToString:@"/rtf2html"])
+
+    if ([method isEqualToString:kSupportedMethodName] && [self.supportedCommands containsObject:path])
     {
         return YES;
     }
-    return [super supportsMethod:method atPath:path];
+    NSLog(@"Unsupported method %@", method);
+    return NO;
 }
 
 
 - (BOOL)expectsRequestBodyFromMethod:(NSString *)method atPath:(NSString *)path
 {
-    if ([method isEqualToString:@"POST"])
+    if ([method isEqualToString:kSupportedMethodName])
     {
-        return YES;
+        if ([path isEqualToString:kCommandPing])
+        {
+            return NO;
+        }
+        else if ([path isEqualToString:kCommandConvert])
+        {
+            return YES;
+        }
     }
     return [super expectsRequestBodyFromMethod:method atPath:path];
 }
@@ -48,80 +82,100 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
 	BOOL result = [request appendData:postDataChunk];
 	if (!result)
 	{
-		HTTPLogError(@"%@[%p]: %@ - Couldn't append bytes!", THIS_FILE, self, THIS_METHOD);
+		HTTPLogError(@"%@[%p]: %@ - Couldn't append bytes", THIS_FILE, self, THIS_METHOD);
 	}
 }
 
 
 - (NSObject<HTTPResponse> *)httpResponseForMethod:(NSString *)method URI:(NSString *)path
 {
-    if ([method isEqualToString:@"POST"] && [path isEqualToString:@"/rtf2html"])
+    if ([method isEqualToString:kSupportedMethodName] )
     {
-        NSLog(@"Responding to rtf2html POST request.");
-        NSData *postData = [request body];
-        
-        NSString *plainData = [self decode:[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]];
         NSDictionary *responseValues;
+         NSError *error = nil;
         
-        if (postData)
+        if ([path isEqualToString:kCommandPing])
         {
-            NSLog(@"POST data found.");
-            NSError *error = nil;
-            NSDictionary *requestData = [NSJSONSerialization JSONObjectWithData:[plainData dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
+            NSLog(@"Responding to ping request.");
+            responseValues = @{@"success": @"true"};
+            NSData *response = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
+            return [[HTTPDataResponse alloc] initWithData:response];
+        }
+        else if ([path isEqualToString:kCommandConvert])
+        {
+            NSLog(@"Responding to rtf2html request.");
+            NSData *postData = [request body];
             
-            NSString *rtfString = nil;
-            NSString *errorDescription = nil;
+            NSString *plainData = [self decode:[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]];
             
-            if (error == nil)
+            
+            if (postData)
             {
-                NSLog(@"JSON deserialized.");
-                rtfString = requestData[@"data"];
+                NSLog(@"POST data found.");
+                NSDate *startDate = [NSDate date];
+               
+                NSDictionary *requestData = [NSJSONSerialization JSONObjectWithData:[plainData dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
                 
-                if (rtfString != nil)
+                NSString *rtfString = nil;
+                NSString *errorDescription = nil;
+                
+                if (error == nil)
                 {
-                    NSLog(@"Found RTF data.");
-                    NSAttributedString *rtf = [[NSAttributedString alloc] initWithRTF:[rtfString dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:nil];
+                    NSLog(@"JSON deserialized.");
+                    rtfString = requestData[@"data"];
                     
-                    if (rtf != nil)
+                    if (rtfString != nil)
                     {
-                        NSLog(@"Converting RTF data");
-                        NSDictionary *defaultAttributes = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
-                        NSString *html = [[NSString alloc] initWithData:[rtf dataFromRange:NSMakeRange(0, rtf.length) documentAttributes:defaultAttributes error:&error] encoding:NSUTF8StringEncoding];
+                        NSLog(@"Found RTF data.");
+                        NSAttributedString *rtf = [[NSAttributedString alloc] initWithRTF:[rtfString dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:nil];
                         
-                        if (error == nil)
+                        if (rtf != nil)
                         {
-                            responseValues = @{@"data" : html, @"success" : @"true"};
+                            NSLog(@"Converting RTF data");
+                            NSDictionary *defaultAttributes = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
+                            NSString *html = [[NSString alloc] initWithData:[rtf dataFromRange:NSMakeRange(0, rtf.length) documentAttributes:defaultAttributes error:&error] encoding:NSUTF8StringEncoding];
+                            
+                            if (error == nil)
+                            {
+                                responseValues = @{@"data" : html, @"success" : @"true"};
+                            }
+                            else
+                            {
+                                NSLog(@"Could not convert to HTML: %@", error.description);
+                                errorDescription = error.description;
+                            }
                         }
-                        else
-                        {
-                            NSLog(@"Could not convert to HTML: %@", error.description);
-                            errorDescription = error.description;
-                        }
+                    }
+                    else
+                    {
+                        NSLog(@"No RTF data found");
+                        errorDescription = NSLocalizedString(@"No RTF data found", nil);
                     }
                 }
                 else
                 {
-                    NSLog(@"No RTF data found");
-                    errorDescription = NSLocalizedString(@"No RTF data found", nil);
+                    NSLog(@"Could not deserialize JSON object.");
+                    errorDescription = error.description;
                 }
+                
+                if (errorDescription != nil)
+                {
+                    responseValues = @{@"success": @"false", @"error" : error.description};
+                }
+                else
+                {
+                    NSDate *endTime = [NSDate date];
+                    NSLog(@"Conversion succeeded in %.2fs.", [endTime timeIntervalSinceDate:startDate]);
+                }
+                NSLog(@"/n");
+                
+                NSData *response = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
+                return [[HTTPDataResponse alloc] initWithData:response];
             }
-            else
-            {
-                NSLog(@"Could not deserialize JSON object.");
-                errorDescription = error.description;
-            }
+        }
+        else if ([path isEqualToString:@"/rtf2html"])
+        {
             
-            if (errorDescription != nil)
-            {
-                responseValues = @{@"success": @"false", @"error" : error.description};
-            }
-            else
-            {
-                NSLog(@"Conversion succeeded.");
-            }
-
-            NSData *response = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
-            return [[HTTPDataResponse alloc] initWithData:response];
         }
     }
     NSData *response = [@"Request not supported." dataUsingEncoding:NSUTF8StringEncoding];
