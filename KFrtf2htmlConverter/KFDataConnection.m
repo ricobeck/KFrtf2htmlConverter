@@ -8,12 +8,14 @@
 
 #import "KFDataConnection.h"
 #import <AppKit/AppKit.h>
+#import "KFPingResponseData.h"
 
 #import <CocoaHTTPServer/HTTPLogging.h>
 #import <CocoaHTTPServer/HTTPMessage.h>
 #import <CocoaHTTPServer/HTTPDataResponse.h>
 
-static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
+static const int httpLogLevel = HTTP_LOG_LEVEL_VERBOSE;
+
 
 #define kSupportedMethodName @"POST"
 
@@ -53,7 +55,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
     {
         return YES;
     }
-    NSLog(@"Unsupported method %@", method);
+    HTTPLogVerbose(@"Unsupported method %@", method);
     return NO;
 }
 
@@ -96,14 +98,15 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
         
         if ([path isEqualToString:kCommandPing])
         {
-            NSLog(@"Responding to ping request.");
+            HTTPLogVerbose(@"Responding to ping request.");
             responseValues = @{@"success": @"true"};
-            NSData *response = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
-            return [[HTTPDataResponse alloc] initWithData:response];
+            NSData *responseData = [NSJSONSerialization dataWithJSONObject:responseValues options:kNilOptions error:&error];
+            KFPingResponseData *response = [[KFPingResponseData alloc] initWithData:responseData];
+            return response;
         }
         else if ([path isEqualToString:kCommandConvert])
         {
-            NSLog(@"Responding to rtf2html request.");
+            HTTPLogVerbose(@"Responding to rtf2html request.");
             NSData *postData = [request body];
             
             NSString *plainData = [self decode:[[NSString alloc] initWithData:postData encoding:NSUTF8StringEncoding]];
@@ -111,7 +114,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
             
             if (postData)
             {
-                NSLog(@"POST data found.");
+                HTTPLogVerbose(@"POST data found.");
                 NSDate *startDate = [NSDate date];
                
                 NSDictionary *requestData = [NSJSONSerialization JSONObjectWithData:[plainData dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
@@ -121,17 +124,17 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
                 
                 if (error == nil)
                 {
-                    NSLog(@"JSON deserialized.");
+                    HTTPLogVerbose(@"JSON deserialized.");
                     rtfString = requestData[@"data"];
                     
                     if (rtfString != nil)
                     {
-                        NSLog(@"Found RTF data.");
+                        HTTPLogVerbose(@"Found RTF data.");
                         NSAttributedString *rtf = [[NSAttributedString alloc] initWithRTF:[rtfString dataUsingEncoding:NSUTF8StringEncoding] documentAttributes:nil];
                         
                         if (rtf != nil)
                         {
-                            NSLog(@"Converting RTF data");
+                            HTTPLogVerbose(@"Converting RTF data");
                             NSDictionary *defaultAttributes = @{NSDocumentTypeDocumentAttribute : NSHTMLTextDocumentType};
                             NSString *html = [[NSString alloc] initWithData:[rtf dataFromRange:NSMakeRange(0, rtf.length) documentAttributes:defaultAttributes error:&error] encoding:NSUTF8StringEncoding];
                             
@@ -141,20 +144,20 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
                             }
                             else
                             {
-                                NSLog(@"Could not convert to HTML: %@", error.description);
+                                HTTPLogError(@"Could not convert to HTML: %@", error.description);
                                 errorDescription = error.description;
                             }
                         }
                     }
                     else
                     {
-                        NSLog(@"No RTF data found");
+                        HTTPLogError(@"No RTF data found");
                         errorDescription = NSLocalizedString(@"No RTF data found", nil);
                     }
                 }
                 else
                 {
-                    NSLog(@"Could not deserialize JSON object.");
+                    HTTPLogError(@"Could not deserialize JSON object.");
                     errorDescription = error.description;
                 }
                 
@@ -165,7 +168,7 @@ static const int httpLogLevel = HTTP_LOG_LEVEL_WARN;
                 else
                 {
                     NSDate *endTime = [NSDate date];
-                    NSLog(@"Conversion succeeded in %.2fs.", [endTime timeIntervalSinceDate:startDate]);
+                    HTTPLogVerbose(@"Conversion succeeded in %.2fs.", [endTime timeIntervalSinceDate:startDate]);
                 }
                 NSLog(@"/n");
                 
