@@ -13,7 +13,7 @@
 
 - (NSDictionary *)httpHeaders
 {
-    return @{@"Access-Control-Allow-Origin" : @"*"};
+    return @{@"Access-Control-Allow-Origin" : @"*", @"Content-Type" : @"application/json"};
 }
 
 
